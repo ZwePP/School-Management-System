@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>School Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1 id=pageTitle></h1>
+
+    <div class="container">
+
+        <section>
+            <h2>Teachers</h2>
+            <input type="text" id="teacherName" placeholder="Teacher Name">
+            <button onclick="addTeacher()">Add Teacher</button>
+
+            <button onclick="loadTeachers()">Load Teachers</button>
+
+            <ul id="teacherList"></ul>
+        </section>
+
+        <hr>
+
+        <section>
+            <h2>Students</h2>
+
+            <button onclick="loadStudents()">Load Students</button>
+
+            <ul id="studentList"></ul>
+        </section>
+
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
