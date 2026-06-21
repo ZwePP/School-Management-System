@@ -46,10 +46,15 @@
         <!-- Students -->
         <section id="students" class="page hidden">
             <h1>Students</h1>
-            <input type="text" id="studentName" placeholder="Student Name">
 
-            <ul id="studentList">
-            </ul>
+            <input type="text" id="studentIDSearch" placeholder="Student ID">
+
+            <button onclick="getStudentID()">Search</button>
+
+            <button onclick="resetStudentSearch()">Cancel</button>        
+
+            <ul id="studentList"></ul>
+
 
         </section>
 

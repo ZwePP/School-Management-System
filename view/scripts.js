@@ -128,5 +128,54 @@ async function deleteStudent(id){
         });
 }
 
+async function getStudentID() {
+    const id =
+        document.getElementById(
+            "studentIDSearch"
+        ).value;
 
+    if (!id) {
+        showStudents();
+        return;
+    }
 
+    const response = await fetch(
+        `${BASE_URL}/students/${id}`
+    );
+
+    if (!response.ok) {
+        alert("Student not found");
+        return;
+    }
+
+    const student = await response.json();
+
+    const list =
+        document.getElementById(
+            "studentList"
+        );
+
+    list.innerHTML = `
+        <li class="result-item">
+            ${student.student_id} -
+            ${student.student_name}
+            ${student.gender}
+            ${student.class_id}
+            ${student.phone}
+            ${student.date_of_birth}
+
+            <button onclick="deleteStudent(${student.student_id})">
+                Delete
+            </button>
+        </li>
+    `;
+}
+
+async function resetStudentSearch() {
+
+    document.getElementById(
+        "studentIDSearch"
+    ).value = "";
+
+    showStudents();
+}
