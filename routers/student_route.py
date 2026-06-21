@@ -19,7 +19,7 @@ class Student(BaseModel):
 
     
 # student endpoints
-@router.get("/students")
+@router.get("/students/")
 async def get_student(student_name: Optional[str]=None, date_of_birth: Optional[datetime.date]=None, gender:Optional[str]=None, phone:Optional[str]=None, class_id:Optional[int]=None):
     conn = db.get_db_connection()
     query = "SELECT * FROM students WHERE 1=1"
@@ -57,7 +57,7 @@ async def students_id(id:int):
     
     return dict(student)
 
-@router.post("/students")
+@router.post("/students/")
 async def add_student(student:Student):
     conn = db.get_db_connection()
     conn.execute(

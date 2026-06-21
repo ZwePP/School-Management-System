@@ -1,27 +1,83 @@
 *{
-margin: 0;
-padding: 0;
-box-sizing: border-box;
-}
-body{
-    font-family: Arial, sans-serif;
-    margin:40px;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-.container{
-    max-width:800px;
+body{
+    font-family:Arial, sans-serif;
+    display:flex;
+    min-height:100vh;
+}
+
+/* Sidebar */
+nav{
+    width:220px;
+    background:#222;
+    color:white;
+    padding:20px;
+}
+
+nav h2{
+    margin-bottom:30px;
+}
+
+nav ul{
+    list-style:none;
+}
+
+nav li{
+    margin-bottom:15px;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+}
+
+/* Content */
+main{
+    flex:1;
+    padding:30px;
+}
+
+.page{
+    display:block;
+}
+
+.hidden{
+    display:none;
 }
 
 input{
-    padding:8px;
+    padding:10px;
+    margin-right:10px;
 }
 
 button{
-    padding:8px 12px;
-    margin:5px;
+    padding:10px;
     cursor:pointer;
+    margin:5px;
+}
+
+ul{
+    margin-top:20px;
 }
 
 li{
-    margin:10px 0;
+    margin-bottom:10px;
+    padding:10px;
+    border:1px solid #ddd;
+}
+
+
+/* student li */
+.result-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:10px;
+    margin-bottom:10px;
+    border:1px solid #ddd;
 }

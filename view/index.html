@@ -6,32 +6,62 @@
 </head>
 <body>
 
-    <h1 id=pageTitle></h1>
+    <nav>
+        <h2 id="pageTitle"></h2>
 
-    <div class="container">
+        <ul>
+            <li><a href="#" onclick="showPage('dashboard')">Dashboard</a></li>
+            <li><a href="#" onclick="showPage('students')">Students</a></li>
+            <li><a href="#" onclick="showPage('teachers')">Teachers</a></li>
+            <li><a href="#" onclick="showPage('classes')">Classes</a></li>
+        </ul>
+    </nav>
 
-        <section>
-            <h2>Teachers</h2>
-            <input type="text" id="teacherName" placeholder="Teacher Name">
-            <button onclick="addTeacher()">Add Teacher</button>
+    <main>
 
-            <button onclick="loadTeachers()">Load Teachers</button>
+        <!-- Dashboard -->
+        <section id="dashboard" class="page">
+            <h1>Dashboard</h1>
+            <p>Welcome to School Management System</p>
+        </section>
+
+        <!-- Teachers -->
+        <section id="teachers" class="page hidden">
+            <h1>Teachers</h1>
+            <input
+                type="text"
+                id="teacherName"
+                placeholder="Teacher Name"
+                style="width: 300px;"
+            >
+            <button onclick="addTeacher()">
+                Add Teacher
+            </button>
+
 
             <ul id="teacherList"></ul>
+
         </section>
 
-        <hr>
+        <!-- Students -->
+        <section id="students" class="page hidden">
+            <h1>Students</h1>
+            <input type="text" id="studentName" placeholder="Student Name">
 
-        <section>
-            <h2>Students</h2>
+            <ul id="studentList">
+            </ul>
 
-            <button onclick="loadStudents()">Load Students</button>
-
-            <ul id="studentList"></ul>
         </section>
 
-    </div>
+        <!-- Class -->
+         <section id="classes" class="page hidden">
+            <h1>Classes</h1>
+            <ul id="classList"></ul>
+         </section>
+
+    </main>
 
     <script src="scripts.js"></script>
+
 </body>
 </html>

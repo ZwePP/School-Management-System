@@ -14,34 +14,44 @@ async function getTitle(){
         
     
 }
-getTitle(); 
+getTitle(); //show title automatically
 
+function showPage(pageId){
+    const pages =
+        document.querySelectorAll(".page");
 
-async function loadTeachers(){
-    const response = await fetch(
-        `${BASE_URL}/teachers/`
-    );
+    pages.forEach(page => {
+        page.classList.add("hidden");
+    });
+
+    document
+        .getElementById(pageId)
+        .classList.remove("hidden");
+}
+
+async function showTeachers() {
+    const response = await fetch(`${BASE_URL}/teachers/`);
     const teachers = await response.json();
 
     const list = document.getElementById("teacherList");
 
     list.innerHTML = "";
-
     teachers.forEach(teacher => {
 
         list.innerHTML += `
-            <li>
-                ${teacher.teacher_id}
-                -
+            <li class="result-item">
+                ${teacher.teacher_id} -
                 ${teacher.teacher_name}
-
                 <button onclick="deleteTeacher(${teacher.teacher_id})">
-                    Delete
-                </button>
+                     Delete
+                 </button>
             </li>
         `;
     });
 }
+
+// Automatically load teachers when page opens
+showTeachers();
 
 async function addTeacher(){
     const name = document.getElementById("teacherName").value;
@@ -81,27 +91,42 @@ async function deleteTeacher(id){
     loadTeachers();
 }
 
-// students
-async function loadStudents(){
-    const response = await fetch(`${BASE_URL}/students`);
-    const students = await response.json();
-    const list = document.getElementById("studentList");
-    list.innerHTML = "";
 
+
+// ---------- STUDENT ----------------
+
+async function showStudents() {
+    const response = await fetch(`${BASE_URL}/students/`);
+    const students = await response.json();
+
+    const list = document.getElementById("studentList");
+
+    list.innerHTML = "";
     students.forEach(student => {
 
         list.innerHTML += `
-            <li>
-                ${student.student_id}
-                -
-                ${student.student_name}
-
-                <button onclick="deleteTeacher(${student.student_id})">
-                    Delete
-                </button>
+            <li class="result-item">
+                ${student.student_id} -
+                 ${student.student_name}
+                 ${student.gender}
+                ${student.class_id}
+                ${student.phone}
+                ${student.date_of_birth}
+                <button onclick="deleteStudent(${student.student_id})">
+                     Delete
+                 </button>
             </li>
         `;
     });
 }
+showStudents()
+
+async function deleteStudent(id){
+    await fetch(`${BASE_URL}/students/${id}`,
+        {
+            method:"DELETE"
+        });
+}
+
 
 
