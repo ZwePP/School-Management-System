@@ -51,9 +51,41 @@
 
             <button onclick="getStudentID()">Search</button>
 
-            <button onclick="resetStudentSearch()">Cancel</button>        
+            <button onclick="resetStudentSearch()">Cancel</button>    
+            
+            
 
             <ul id="studentList"></ul>
+            <div id="editModal" class="hidden">
+
+                <h2>Edit Student</h2>
+
+                <input type="hidden" id="editStudentId">
+
+                <label>Name</label>
+                <input type="text" id="editName">
+
+                <label>Gender</label>
+                <input type="text" id="editGender">
+
+                <label>Phone</label>
+                <input type="text" id="editPhone">
+
+                <label>D.O.B</label>
+                <input type="date" id="editDOB">
+
+                <label>Class ID</label>
+                <input type="number" id="editClassId">
+
+                <button onclick="saveStudent()">
+                    Save
+                </button>
+
+                <button onclick="closeModal()">
+                    Cancel
+                </button>
+
+            </div>
 
 
         </section>

@@ -23,7 +23,6 @@ function showPage(pageId){
     pages.forEach(page => {
         page.classList.add("hidden");
     });
-
     document
         .getElementById(pageId)
         .classList.remove("hidden");
@@ -94,7 +93,6 @@ async function deleteTeacher(id){
 
 
 // ---------- STUDENT ----------------
-
 async function showStudents() {
     const response = await fetch(`${BASE_URL}/students/`);
     const students = await response.json();
@@ -107,11 +105,14 @@ async function showStudents() {
         list.innerHTML += `
             <li class="result-item">
                 ${student.student_id} -
-                 ${student.student_name}
-                 ${student.gender}
-                ${student.class_id}
+                ${student.student_name}
+                ${student.gender}
                 ${student.phone}
                 ${student.date_of_birth}
+                ${student.class_id}
+                <button onclick="showModal(${student.id})">
+                    Edit
+                </button>
                 <button onclick="deleteStudent(${student.student_id})">
                      Delete
                  </button>
@@ -154,7 +155,6 @@ async function getStudentID() {
         document.getElementById(
             "studentList"
         );
-
     list.innerHTML = `
         <li class="result-item">
             ${student.student_id} -
@@ -172,10 +172,35 @@ async function getStudentID() {
 }
 
 async function resetStudentSearch() {
-
     document.getElementById(
         "studentIDSearch"
     ).value = "";
 
     showStudents();
+}
+
+
+async function showModal(id){
+    document.getElementById("editStudentId").value = id; //store opened id
+    document.getElementById("editModal").classList.remove("hidden");
+}
+
+async function closeModal(){
+    document.getElementById("editModal").classList.add("hidden");
+}
+async function saveStudent(){
+    const id = document.getElementById("editStudentId").value;
+    const stuName = document.getElementById("editName").value;
+    const stuGender = document.getElementById("editGender").value;
+    const stuPhone = document.getElementById("editPhone").value;
+    const stuDOB = document.getElementById("editDOB").value;
+    const classID = parseInt(document.getElementById("editClassId").value);
+
+    console.log(id, stuName, stuGender, stuPhone, stuDOB, classID)
+
+    await fetch(
+        `${BASE_URL}/student/${id}`,
+
+    )
+
 }
