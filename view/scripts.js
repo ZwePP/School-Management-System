@@ -110,7 +110,7 @@ async function showStudents() {
                 ${student.phone}
                 ${student.date_of_birth}
                 ${student.class_id}
-                <button onclick="showModal(${student.id})">
+                <button onclick="showModal(${student.student_id})">
                     Edit
                 </button>
                 <button onclick="deleteStudent(${student.student_id})">
@@ -181,6 +181,14 @@ async function resetStudentSearch() {
 
 
 async function showModal(id){
+    const response = await fetch(`${BASE_URL}/students/${id}`);
+    const  data = await response.json()
+    // fill the box with the student values
+    document.getElementById("editName").value = data.student_name;   
+    document.getElementById("editGender").value = data.gender;   
+    document.getElementById("editPhone").value = data.phone;   
+    document.getElementById("editDOB").value = data.date_of_birth;   
+    document.getElementById("editClassId").value = data.class_id;   
     document.getElementById("editStudentId").value = id; //store opened id
     document.getElementById("editModal").classList.remove("hidden");
 }
@@ -196,11 +204,19 @@ async function saveStudent(){
     const stuDOB = document.getElementById("editDOB").value;
     const classID = parseInt(document.getElementById("editClassId").value);
 
-    console.log(id, stuName, stuGender, stuPhone, stuDOB, classID)
-
     await fetch(
-        `${BASE_URL}/student/${id}`,
+        `${BASE_URL}/students/${id}`,
+        {
+            method:'PUT',
+            headers:{
+                    'Content-Type': 'application/json', // Informs the server about the data format
+            },
+            body: JSON.stringify({"name":stuName,"date_of_birth":stuDOB,"gender":stuGender,"phone":stuPhone,"class_id":classID}) 
 
-    )
+        }
+        
+
+    );
+    console.log(typeof classID)
 
 }
