@@ -19,7 +19,7 @@
 --     class_name TEXT NOT NULL
 -- );
 
--- -- --CREATE student table
+-- --CREATE student table
 -- CREATE TABLE students(
 --     student_id INTEGER PRIMARY KEY AUTOINCREMENT,
 --     student_name TEXT NOT NULL,
@@ -38,16 +38,16 @@
 --     FOREIGN KEY (teacher_id) REFERENCES teachers(teacher_id)
 -- );
 
--- -- -- CREATE attendance table
--- CREATE TABLE attendances(
---     attendance_id INTEGER PRIMARY KEY AUTOINCREMENT,
---     date DATE NOT NULL,
---     status TEXT NOT NULL,
---     student_id INTEGER NOT NULL,
---     FOREIGN KEY (student_id) REFERENCES students(student_id)
--- );
+-- -- -- -- CREATE attendance table
+-- -- CREATE TABLE attendances(
+-- --     attendance_id INTEGER PRIMARY KEY AUTOINCREMENT,
+-- --     date DATE NOT NULL,
+-- --     status TEXT NOT NULL,
+-- --     student_id INTEGER NOT NULL,
+-- --     FOREIGN KEY (student_id) REFERENCES students(student_id)
+-- -- );
 
--- Create Transcript
+-- -- Create Transcript
 -- CREATE TABLE transcripts(
 --     transcript_id INTEGER PRIMARY KEY AUTOINCREMENT,
 --     score INTEGER NOT NULL,
@@ -178,3 +178,8 @@
 --     a.status
 -- FROM students AS st
 -- JOIN attendances AS a ON st.student_id = a.student_id;
+
+
+INSERT INTO users(username, password, role) VALUES (
+    'teacher1', 'teacher123', 'teacher'
+);

@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from routers import student_route, teacher_route
+from routers import student_route, teacher_route,login
 from fastapi.middleware.cors import CORSMiddleware
 import database.db as db
 
@@ -21,5 +21,6 @@ app.add_middleware(
 async def home():
     return {"title": "School Management Software"}
 
+app.include_router(login.router)
 app.include_router(student_route.router)
 app.include_router(teacher_route.router)
