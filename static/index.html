@@ -5,8 +5,16 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div id="loginPage">
+        <h2 id="pageTitle"></h2>
+        <input type="text"     id="loginUsername" placeholder="Username">
+        <input type="password" id="loginPassword" placeholder="Password">
+        <button onclick="login()">Login</button>
+        <p id="loginError" style="color:red;"></p>
+    </div>
 
-    <nav>
+
+    <nav id="sidebar" class="hidden">
         <h2 id="pageTitle"></h2>
 
         <ul>
@@ -17,7 +25,7 @@
         </ul>
     </nav>
 
-    <main>
+    <main id="mainContent" class="hidden">
 
         <!-- Dashboard -->
         <section id="dashboard" class="page">

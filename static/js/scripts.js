@@ -12,8 +12,14 @@ import {
     addStudent
 } from "./students.js";
 import { showTeachers, addTeacher, deleteTeacher } from "./teachers.js";
+import { login, logout, getCurrentUser } from "./login.js";
+
 
 // ── Expose functions used in HTML onclick attributes ──────────────────────────
+
+window.login = login;
+window.logout = logout;
+
 
 window.showPage         = showPage;
 
