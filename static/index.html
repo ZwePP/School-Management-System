@@ -52,6 +52,9 @@
             <button onclick="getStudentID()">Search</button>
 
             <button onclick="resetStudentSearch()">Cancel</button>    
+
+            <button onclick="showAddForm()">Add Student</button>
+
             
             
 
@@ -84,7 +87,36 @@
                 <button onclick="closeModal()">
                     Cancel
                 </button>
+            </div>
 
+            <div id="addModal" class="hidden">
+
+                <h2>Add Student</h2>
+
+                <input type="hidden" id="addStudentID">
+
+                <label>Name</label>
+                <input type="text" id="addStudentName">
+
+                <label>Gender</label>
+                <input type="text" id="addStudentGender">
+
+                <label>Phone</label>
+                <input type="text" id="addStudentPhone">
+
+                <label>D.O.B</label>
+                <input type="date" id="addStudentDOB">
+
+                <label>Class ID</label>
+                <input type="number" id="addStudentClass">
+
+                <button onclick="addStudent()">
+                    Save
+                </button>
+
+                <button onclick="closeAddForm()">
+                    Cancel
+                </button>
             </div>
 
 

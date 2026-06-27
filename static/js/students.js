@@ -14,6 +14,23 @@ export async function showStudents() {
     });
 }
 
+// ── Helpers ───────────────────────────────────────────────────────────────────
+function buildStudentRow(student) {
+    return `
+        <li class="result-item">
+            <span>
+                #${student.student_id} — ${student.student_name}
+                (${student.gender}) | ${student.phone} | ${student.date_of_birth} | Class ${student.class_id}
+            </span>
+            <span>
+                <button onclick="showModal(${student.student_id})">Edit</button>
+                <button onclick="deleteStudent(${student.student_id})">Delete</button>
+            </span>
+        </li>
+    `;
+}
+
+
 export async function getStudentID() {
     const id = document.getElementById("studentIDSearch").value.trim();
 
@@ -108,19 +125,31 @@ export async function saveStudent() {
     showStudents();
 }
 
-// ── Helpers ───────────────────────────────────────────────────────────────────
+// Add modal
+export async function showAddForm(){
+    document.getElementById("addModal").classList.remove("hidden");
+}
+export async function closeAddForm(){
+    document.getElementById("addModal").classList.add("hidden");
+}
+export async function addStudent(){
+    const payload = {
+        name: document.getElementById("addStudentName").value.trim(),
+        date_of_birth: document.getElementById("addStudentDOB").value,
+        gender: document.getElementById("addStudentGender").value.trim(),
+        phone: document.getElementById("addStudentPhone").value.trim(),
+        class_id: parseInt(document.getElementById("addStudentClass").value)
+    };
 
-function buildStudentRow(student) {
-    return `
-        <li class="result-item">
-            <span>
-                #${student.student_id} — ${student.student_name}
-                (${student.gender}) | ${student.phone} | ${student.date_of_birth} | Class ${student.class_id}
-            </span>
-            <span>
-                <button onclick="showModal(${student.student_id})">Edit</button>
-                <button onclick="deleteStudent(${student.student_id})">Delete</button>
-            </span>
-        </li>
-    `;
+    const response = await fetch(`${BASE_URL}/students/`,{
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+
+    })
+    if (!response.ok) {
+        alert("Failed to save student");
+        return;
+    }
+    closeAddForm()
 }

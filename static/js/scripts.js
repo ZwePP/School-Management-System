@@ -7,6 +7,9 @@ import {
     showModal,
     closeModal,
     saveStudent,
+    showAddForm,
+    closeAddForm,
+    addStudent
 } from "./students.js";
 import { showTeachers, addTeacher, deleteTeacher } from "./teachers.js";
 
@@ -21,7 +24,9 @@ window.deleteStudent    = deleteStudent;
 window.showModal        = showModal;
 window.closeModal       = closeModal;
 window.saveStudent      = saveStudent;
-
+window.showAddForm      = showAddForm;
+window.closeAddForm     = closeAddForm;
+window.addStudent       = addStudent;
 // Teachers
 window.addTeacher       = addTeacher;
 window.deleteTeacher    = deleteTeacher;
