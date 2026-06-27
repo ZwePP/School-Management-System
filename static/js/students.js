@@ -1,55 +1,28 @@
 import { BASE_URL } from "./config.js";
 
+// ── Read ──────────────────────────────────────────────────────────────────────
 
-async function showStudents() {
+export async function showStudents() {
     const response = await fetch(`${BASE_URL}/students/`);
     const students = await response.json();
 
     const list = document.getElementById("studentList");
-
     list.innerHTML = "";
-    students.forEach(student => {
 
-        list.innerHTML += `
-            <li class="result-item">
-                ${student.student_id} -
-                ${student.student_name}
-                ${student.gender}
-                ${student.phone}
-                ${student.date_of_birth}
-                ${student.class_id}
-                <button onclick="showModal(${student.student_id})">
-                    Edit
-                </button>
-                <button onclick="deleteStudent(${student.student_id})">
-                     Delete
-                 </button>
-            </li>
-        `;
+    students.forEach(student => {
+        list.innerHTML += buildStudentRow(student);
     });
 }
 
-async function deleteStudent(id){
-    await fetch(`${BASE_URL}/students/${id}`,
-        {
-            method:"DELETE"
-        });
-}
-
-async function getStudentID() {
-    const id =
-        document.getElementById(
-            "studentIDSearch"
-        ).value;
+export async function getStudentID() {
+    const id = document.getElementById("studentIDSearch").value.trim();
 
     if (!id) {
         showStudents();
         return;
     }
 
-    const response = await fetch(
-        `${BASE_URL}/students/${id}`
-    );
+    const response = await fetch(`${BASE_URL}/students/${id}`);
 
     if (!response.ok) {
         alert("Student not found");
@@ -57,75 +30,97 @@ async function getStudentID() {
     }
 
     const student = await response.json();
-
-    const list =
-        document.getElementById(
-            "studentList"
-        );
-    list.innerHTML = `
-        <li class="result-item">
-            ${student.student_id} -
-            ${student.student_name}
-            ${student.gender}
-            ${student.class_id}
-            ${student.phone}
-            ${student.date_of_birth}
-
-            <button onclick="deleteStudent(${student.student_id})">
-                Delete
-            </button>
-        </li>
-    `;
+    const list = document.getElementById("studentList");
+    list.innerHTML = buildStudentRow(student);
 }
 
-async function resetStudentSearch() {
-    document.getElementById(
-        "studentIDSearch"
-    ).value = "";
+export function resetStudentSearch() {
+    document.getElementById("studentIDSearch").value = "";
+    showStudents();
+}
+
+// ── Delete ────────────────────────────────────────────────────────────────────
+
+export async function deleteStudent(id) {
+    if (!confirm(`Delete student #${id}?`)) return;
+
+    const response = await fetch(`${BASE_URL}/students/${id}`, {
+        method: "DELETE",
+    });
+
+    if (!response.ok) {
+        alert("Failed to delete student");
+        return;
+    }
 
     showStudents();
 }
 
+// ── Edit modal ────────────────────────────────────────────────────────────────
 
-async function showModal(id){
+export async function showModal(id) {
     const response = await fetch(`${BASE_URL}/students/${id}`);
-    const  data = await response.json()
-    // fill the box with the student values
-    document.getElementById("editName").value = data.student_name;   
-    document.getElementById("editGender").value = data.gender;   
-    document.getElementById("editPhone").value = data.phone;   
-    document.getElementById("editDOB").value = data.date_of_birth;   
-    document.getElementById("editClassId").value = data.class_id;   
-    document.getElementById("editStudentId").value = id; //store opened id
+
+    if (!response.ok) {
+        alert("Could not load student data");
+        return;
+    }
+
+    const student = await response.json();
+
+    document.getElementById("editStudentId").value = id;
+    document.getElementById("editName").value     = student.student_name;
+    document.getElementById("editGender").value   = student.gender;
+    document.getElementById("editPhone").value    = student.phone;
+    document.getElementById("editDOB").value      = student.date_of_birth;
+    document.getElementById("editClassId").value  = student.class_id;
+
     document.getElementById("editModal").classList.remove("hidden");
 }
 
-async function closeModal(){
+export function closeModal() {
     document.getElementById("editModal").classList.add("hidden");
 }
-async function saveStudent(){
+
+export async function saveStudent() {
     const id = document.getElementById("editStudentId").value;
-    const stuName = document.getElementById("editName").value;
-    const stuGender = document.getElementById("editGender").value;
-    const stuPhone = document.getElementById("editPhone").value;
-    const stuDOB = document.getElementById("editDOB").value;
-    const classID = parseInt(document.getElementById("editClassId").value);
 
-    await fetch(
-        `${BASE_URL}/students/${id}`,
-        {
-            method:'PUT',
-            headers:{
-                    'Content-Type': 'application/json', // Informs the server about the data format
-            },
-            body: JSON.stringify({"name":stuName,"date_of_birth":stuDOB,"gender":stuGender,"phone":stuPhone,"class_id":classID}) 
+    const payload = {
+        name:          document.getElementById("editName").value.trim(),
+        gender:        document.getElementById("editGender").value.trim(),
+        phone:         document.getElementById("editPhone").value.trim(),
+        date_of_birth: document.getElementById("editDOB").value,
+        class_id:      parseInt(document.getElementById("editClassId").value, 10),
+    };
 
-        }
-        
+    const response = await fetch(`${BASE_URL}/students/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+    });
 
-    );
-    console.log(typeof classID)
+    if (!response.ok) {
+        alert("Failed to save student");
+        return;
+    }
 
+    closeModal();
+    showStudents();
 }
 
+// ── Helpers ───────────────────────────────────────────────────────────────────
 
+function buildStudentRow(student) {
+    return `
+        <li class="result-item">
+            <span>
+                #${student.student_id} — ${student.student_name}
+                (${student.gender}) | ${student.phone} | ${student.date_of_birth} | Class ${student.class_id}
+            </span>
+            <span>
+                <button onclick="showModal(${student.student_id})">Edit</button>
+                <button onclick="deleteStudent(${student.student_id})">Delete</button>
+            </span>
+        </li>
+    `;
+}

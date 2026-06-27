@@ -1,36 +1,34 @@
+import { getTitle, showPage } from "./common.js";
+import {
+    showStudents,
+    getStudentID,
+    resetStudentSearch,
+    deleteStudent,
+    showModal,
+    closeModal,
+    saveStudent,
+} from "./students.js";
+import { showTeachers, addTeacher, deleteTeacher } from "./teachers.js";
 
-import { getTitle } from './common.js';
-import "./students.js";
-import "./teachers.js";
+// ── Expose functions used in HTML onclick attributes ──────────────────────────
+
+window.showPage         = showPage;
+
+// Students
+window.getStudentID     = getStudentID;
+window.resetStudentSearch = resetStudentSearch;
+window.deleteStudent    = deleteStudent;
+window.showModal        = showModal;
+window.closeModal       = closeModal;
+window.saveStudent      = saveStudent;
+
+// Teachers
+window.addTeacher       = addTeacher;
+window.deleteTeacher    = deleteTeacher;
+
+// ── Init ──────────────────────────────────────────────────────────────────────
 
 getTitle();
-
-function showPage(pageId){
-    const pages =
-        document.querySelectorAll(".page");
-
-    pages.forEach(page => {
-        page.classList.add("hidden");
-    });
-    document
-        .getElementById(pageId)
-        .classList.remove("hidden");
-}
-
-window.showPage = showPage;
-
-
-
-
-
-
-// ---------- STUDENT ----------------
-
-
-
-
-
-
-
-
-
+showStudents();
+showTeachers();
+showPage("dashboard");
